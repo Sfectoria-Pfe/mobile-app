@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `program` MODIFY `imageURL` LONGTEXT NOT NULL,
+    MODIFY `title` VARCHAR(191) NOT NULL;
