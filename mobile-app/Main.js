@@ -12,7 +12,6 @@ import { AsyncStorage } from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 
 export default function Main() {
-  // const [user, setUser] = useState(true);
   const Stack = createNativeStackNavigator();
   const user = useSelector((state) => state.auth?.me);
   const dispatch = useDispatch();

@@ -14,8 +14,8 @@ datasource db {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  email     String @unique
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
   fullName  String
   password  String
   avatarUrl String?
@@ -46,4 +46,22 @@ model Module {
   id            Int             @id @default(autoincrement())
   title         String
   ProgramModule ProgramModule[]
+}
+
+model Media {
+  id          String    @id @default(uuid())
+  path        String
+  type        String
+  alt         String?
+  extension   String
+  description String?
+  Product     Product[]
+}
+
+model Product {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  Media   Media?  @relation(fields: [mediaId], references: [id])
+  mediaId String?
 }

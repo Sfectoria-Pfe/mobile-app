@@ -39,25 +39,22 @@ export const login = createAsyncThunk("login", async (body, { dispatch }) => {
   }
 });
 
-export const logout = createAsyncThunk('logout',async()=>{
-    await AsyncStorage.removeItem("token")
-    
-})
+export const logout = createAsyncThunk("logout", async () => {
+  await AsyncStorage.removeItem("token");
+});
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     me: null,
   },
-  reducers: {
-   
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(me.fulfilled, (state, action) => {
       state.me = action.payload;
     });
     builder.addCase(logout.fulfilled, (state, action) => {
-      state.me =null
+      state.me = null;
     });
   },
 });
