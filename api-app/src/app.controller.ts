@@ -1,41 +1,45 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
-import { Post, UploadedFile, UseInterceptors, Body } from '@nestjs/common';
 
-import { diskStorage, Multer } from 'multer';
+import { AppService } from './app.service';
+import {  Body, Controller, Get, Post,
+  UploadedFile,UseInterceptors} from '@nestjs/common';
+
+
+import { diskStorage,Multer } from 'multer';
 import { extname } from 'path';
 import { existsSync, mkdirSync } from 'fs';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { MediasService } from './medias/medias.service';
+import { FileInterceptor ,FilesInterceptor} from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+
+
 
 const multerConfig = {
   dest: 'upload',
 };
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly MediasService: MediasService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
     return this.appService.getHello();
   }
 
-  // async upload(@UploadedFile() file: Multer.File, @Body() dto: any) {
-  //   console.log(file);
-  //   let data = {
-  //     description: dto.description,
-  //     alt:dto.alt,
-  //     extension: file.filename.split('.')[1],
-  //     type: file.mimetype,
-  //     path: 'http://localhost:3000/' + 'upload/' + file.filename
-  //   }
-  //   return this.MediasService.create(data)
-  // }
+  
 
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @Post('upload')
+  
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -54,21 +58,26 @@ export class AppController {
             .fill(null)
             .map(() => Math.round(Math.random() * 16).toString(16))
             .join('');
-          //  Calling the callback passing the random name generated with the original extension name
+          //  Calling the callback passing the random name generated with
+          // the original extension name
           cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
     }),
   )
+
+
   uploadFile(@UploadedFile() file: Multer.File, @Body() dto: any) {
-    console.log(file, file);
+    console.log(file, "file");
     let data = {
            description: dto.description,
            alt:dto.alt,
            extension: file.filename.split('.')[1],
            type: file.mimetype,
-           path: 'http:localhost:3000/'+'upload/'+ file.filename
+           path: 'http:localhost:5000/'+'upload/'+ file.filename
          }
-         return this.MediasService.create(data)
+         return data
   }
 }
+
+ 

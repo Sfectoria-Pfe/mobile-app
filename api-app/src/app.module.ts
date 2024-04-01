@@ -7,11 +7,10 @@ import { ProgramsModule } from './programs/programs.module';
 import { ModulesModule } from './modules/modules.module';
 import { SessionsModule } from './sessions/sessions.module';
 import { AuthModule } from './auth/auth.module';
-import { MediasModule } from './medias/medias.module';
-import { MediasService } from './medias/medias.service';
+
 import { PrismaService } from './prisma/prisma.service';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
+import { ProductModule } from './product/product.module';
+
 
 @Module({
   imports: [
@@ -21,13 +20,9 @@ import { join } from 'path';
     ModulesModule,
     SessionsModule,
     AuthModule,
-    MediasModule,
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'upload'), // Adjust the path based on your project structure
-      serveRoot: 'upload', // Update rootPath based on your project structure // URL path prefix for accessing files
-    }),
+    ProductModule 
   ],
   controllers: [AppController],
-  providers: [AppService,MediasService,PrismaService],
+  providers: [AppService,PrismaService],
 })
 export class AppModule {}

@@ -48,20 +48,14 @@ model Module {
   ProgramModule ProgramModule[]
 }
 
-model Media {
-  id          String    @id @default(uuid())
-  path        String
-  type        String
-  alt         String?
-  extension   String
-  description String?
-  Product     Product[]
-}
+
 
 model Product {
   id    Int    @id @default(autoincrement())
   title String
+  description String@db.Text
+  price Int
+  coverUrl String
 
-  Media   Media?  @relation(fields: [mediaId], references: [id])
-  mediaId String?
+
 }
