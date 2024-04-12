@@ -74,7 +74,7 @@ export class AppController {
            alt:dto.alt,
            extension: file.filename.split('.')[1],
            type: file.mimetype,
-           path: 'http:localhost:5000/'+'upload/'+ file.filename
+           path: 'http://localhost:5000/'+'upload/'+ file.filename
          }
          return data
   }

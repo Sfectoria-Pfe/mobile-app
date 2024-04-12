@@ -8,6 +8,7 @@ async function bootstrap() {
   
   app.setGlobalPrefix('/api/v1');
   app.enableCors({ origin: '*' });
+  
   app.useGlobalPipes(new ValidationPipe());
   app.useStaticAssets('upload',{prefix:'/upload'})
  
